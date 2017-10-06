@@ -26,9 +26,9 @@ export default class extends Phaser.State {
   addDrop() {
     let droplet = this.fluid.getFirstDead()
     if (droplet) {
-      droplet.reset(700, 700)
+      droplet.reset(this.game.input.mousePointer.clientX, 700)
     } else {
-      droplet = this.game.add.sprite(700, 700, 'drop')
+      droplet = this.game.add.sprite(this.game.input.mousePointer.clientX, 700, 'drop')
       droplet.scale.set(0.5)
 
       // Add the droplet to the fluid group
