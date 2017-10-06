@@ -1,21 +1,49 @@
-/* globals __DEV__ */
 import Phaser from 'phaser'
 
 export default class extends Phaser.State {
-  init () {}
-  preload () {}
+  init() {}
+  preload() {
+    this.game.physics.startSystem(Phaser.Physics.P2JS)
+    this.game.physics.p2.restitution = 0.4
+    this.game.physics.p2.gravity.x = 40
 
-  create () {
-    const bannerText = 'Chroma Conflict'
-    let banner = this.add.text(this.world.centerX, this.game.height - 80, bannerText)
-    banner.font = 'Bangers'
-    banner.padding.set(10, 16)
-    banner.fontSize = 40
-    banner.fill = '#77BFA3'
-    banner.smoothed = false
-    banner.anchor.setTo(0.5)
+    this.fluid = this.game.add.group()
+    for (var i = 0; i < 220; i++) {
+      let randomX = this.game.rnd.between(0, this.game.width / 3)
+      let randomY = this.game.rnd.between(0, this.game.height)
+
+      let droplet = this.game.add.sprite(randomX, randomY, 'drop')
+      droplet.scale.set(2)
+
+      // Enable physics for the droplet
+      this.game.physics.p2.enable(droplet)
+      droplet.body.collideWorldBounds = true
+
+      // Add a force that slows down the droplet over time
+      droplet.body.damping = 0.3
+
+      // This makes the collision body smaller so that the droplets can get
+      // really up close and goopy
+      droplet.body.setCircle(droplet.width * 0.3)
+
+      // Add the droplet to the fluid group
+      this.fluid.add(droplet)
+    }
+
+    this.addShaders()
   }
 
-  render () {
+  create() {}
+
+  render() {}
+
+  addShaders() {
+    let blurX = this.game.add.filter('BlurX')
+    let blurY = this.game.add.filter('BlurY')
+    blurX.blur = 32
+    blurY.blur = 32
+    let thresholdShader = new Phaser.Filter(this.game, null, this.game.cache.getShader('threshold'))
+    this.fluid.filters = [blurY, blurX, thresholdShader]
+    this.fluid.filterArea = this.game.camera.view
   }
 }

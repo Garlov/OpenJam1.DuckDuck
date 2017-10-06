@@ -1,5 +1,5 @@
 export default {
-  gameWidth: 760,
-  gameHeight: 400,
+  gameWidth: 1366,
+  gameHeight: 768,
   localStorageName: 'chromaconflict'
 }

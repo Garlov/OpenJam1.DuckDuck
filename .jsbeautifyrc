@@ -1,0 +1,6 @@
+{
+    "end_with_newline": true,
+    "space_after_anon_function": true,
+    "unindent_chained_methods": false,
+    "indent_size": 2    
+}
