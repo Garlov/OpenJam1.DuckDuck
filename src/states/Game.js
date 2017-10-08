@@ -12,7 +12,23 @@ export default class extends Phaser.State {
 
     this.fluid = this.game.add.group()
 
-    this.game.time.events.loop(10, this.addDrop, this)
+    this.game.time.events.loop(10, () => {
+      this.addDrop(0)
+    }, this)
+
+    this.game.time.events.loop(20, () => {
+      this.addDrop(-10)
+      this.addDrop(10)
+    }, this)
+
+
+    this.game.time.events.loop(18, () => {
+      this.addDrop(-5)
+    }, this)
+
+    this.game.time.events.loop(15, () => {
+      this.addDrop(5)
+    }, this)
 
     this.addShaders()
   }
@@ -23,18 +39,18 @@ export default class extends Phaser.State {
 
   update() {}
 
-  addDrop() {
+  addDrop(xDif) {
     let droplet = this.fluid.getFirstDead()
     if (droplet) {
-      droplet.reset(this.game.input.mousePointer.clientX, 700)
+      droplet.reset(this.game.input.mousePointer.clientX + xDif, 700)
     } else {
-      droplet = this.game.add.sprite(this.game.input.mousePointer.clientX, 700, 'drop')
-      droplet.scale.set(0.5)
+      droplet = this.game.add.sprite(this.game.input.mousePointer.clientX + xDif, 700, 'drop')
+      droplet.scale.set(0.3)
 
       // Add the droplet to the fluid group
       this.fluid.add(droplet)
     }
-    droplet.lifespan = 10000
+    droplet.lifespan = 3000
     // Enable physics for the droplet
     this.game.physics.p2.enable(droplet)
     droplet.body.collideWorldBounds = true
@@ -46,15 +62,15 @@ export default class extends Phaser.State {
     // really up close and goopy
     droplet.body.setCircle(droplet.width * 0.3)
 
-    droplet.body.velocity.y = -800
-    droplet.body.velocity.x = this.game.rnd.between(-40, 40)
+    droplet.body.velocity.y = -1000
+    // droplet.body.velocity.x = this.game.rnd.between(-40, 40)
   }
 
   addShaders() {
     let blurX = this.game.add.filter('BlurX')
     let blurY = this.game.add.filter('BlurY')
-    blurX.blur = 20
-    blurY.blur = 20
+    blurX.blur = 12
+    blurY.blur = 18
     let thresholdShader = new Phaser.Filter(this.game, null, this.game.cache.getShader('threshold'))
     this.fluid.filters = [blurY, blurX, thresholdShader]
     this.fluid.filterArea = this.game.camera.view
