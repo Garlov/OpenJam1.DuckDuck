@@ -1,4 +1,5 @@
 import Phaser from 'phaser'
+import config from '../config'
 
 export default class extends Phaser.State {
   init() {
@@ -6,7 +7,7 @@ export default class extends Phaser.State {
     this.stage.disableVisibilityChange = true
     let escKey = this.game.input.keyboard.addKey(Phaser.Keyboard.ESC)
     escKey.onDown.add(() => {
-      this.state.start('Menu')
+      this.endGame()
     })
   }
   preload() {
@@ -42,11 +43,31 @@ export default class extends Phaser.State {
     this.duck.body.setCircle(this.duck.width * 0.5)
     this.duck.body.mass = 200
     this.duck.body.velocity.x = 100
+
+    this.score = this.add.text(this.world.width - 20, 0, '0', config.defaultTextStyle)
+    this.score.fontSize = 100
+    this.score.fill = '#ffff00'
+    this.score.stroke = '#000000'
+    this.score.strokeThickness = 10
+    this.score.anchor.setTo(1, 0)
+  }
+
+  endGame() {
+    let highscore = parseInt(localStorage.getItem(config.localStorageName + 'highscore'))
+
+    if (highscore && highscore < this.ducksMoved) {
+      localStorage.setItem(config.localStorageName + 'highscore', this.ducksMoved)
+    }
+
+    localStorage.setItem(config.localStorageName + 'last', this.ducksMoved)
+
+    this.state.start('Menu')
   }
 
   checkDuckDistance() {
     if (this.duck.position.x > this.game.width - 200) {
       this.ducksMoved += 1
+      this.score.text = this.ducksMoved
       this.resetDuck()
     }
   }

@@ -9,27 +9,28 @@ export default class extends Phaser.State {
   create() {
     const bannerText = config.title
 
-    const defaultTextStyle = {
-      font: 'Modak',
-      padding: new Phaser.Point(10, 16),
-      fontSize: 60,
-      fill: '#000000',
-      smoothed: false
-    }
-
-    this.banner = this.add.text(this.world.centerX, this.game.height * 0.2, bannerText, defaultTextStyle)
+    this.banner = this.add.text(this.world.centerX, this.game.height * 0.2, bannerText, config.defaultTextStyle)
     this.banner.fontSize = 100
     this.banner.fill = '#ffff00'
     this.banner.stroke = '#000000'
     this.banner.strokeThickness = 10
     this.banner.anchor.setTo(0.5)
 
-    this.playButton = this.game.add.button(this.game.world.centerX, this.game.world.centerY, 'button', () => {
+    this.info = this.add.text(this.world.centerX, this.game.height * 0.35, 'Use the waterjet to move the duck from one side to the other. The duck accumulates more and more mass as time goes. How many can you get across before the jet get insufficient?', config.defaultTextStyle)
+    this.info.fontSize = 30
+    this.info.fill = '#ffff00'
+    this.info.stroke = '#000000'
+    this.info.strokeThickness = 6
+    this.info.wordWrap = true
+    this.info.wordWrapWidth = 800
+    this.info.anchor.setTo(0.5, 0)
+
+    this.playButton = this.game.add.button(this.game.world.centerX, this.game.height * 0.7, 'button', () => {
       this.state.start('Game')
     })
     this.playButton.anchor.set(0.5)
 
-    this.playText = this.add.text(this.game.world.centerX, this.game.world.centerY, 'Play', defaultTextStyle)
+    this.playText = this.add.text(this.game.world.centerX, this.game.height * 0.7, 'Play', config.defaultTextStyle)
     this.playText.anchor.setTo(0.5)
   }
 
