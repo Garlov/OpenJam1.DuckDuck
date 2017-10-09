@@ -16,7 +16,7 @@ export default class extends Phaser.State {
     this.banner.strokeThickness = 10
     this.banner.anchor.setTo(0.5)
 
-    this.info = this.add.text(this.world.centerX, this.game.height * 0.35, 'Use the waterjet to move the duck from one side to the other. The duck accumulates more and more mass as time goes. How many can you get across before the jet get insufficient?', config.defaultTextStyle)
+    this.info = this.add.text(this.world.centerX, this.game.height * 0.35, 'Use the water jet to move the duck from one side to the other. The duck accumulates more and more mass as time goes. How many can you get across before the jet gets insufficient?', config.defaultTextStyle)
     this.info.fontSize = 30
     this.info.fill = '#ffff00'
     this.info.stroke = '#000000'
