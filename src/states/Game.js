@@ -50,6 +50,10 @@ export default class extends Phaser.State {
     this.score.stroke = '#000000'
     this.score.strokeThickness = 10
     this.score.anchor.setTo(1, 0)
+
+    this.pipe = this.game.add.sprite(this.game.input.mousePointer.clientX, this.game.height, 'pipe')
+    this.pipe.scale.set(0.5)
+    this.pipe.anchor.set(0.5, 1)
   }
 
   endGame() {
@@ -89,6 +93,7 @@ export default class extends Phaser.State {
 
   update() {
     this.checkDuckDistance()
+    this.pipe.position.x = this.game.input.mousePointer.clientX
   }
 
   addDrop(xDif) {
