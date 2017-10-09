@@ -44,6 +44,10 @@ export default class extends Phaser.State {
     this.duck.body.mass = 200
     this.duck.body.velocity.x = 100
 
+    this.game.time.events.loop(1000, () => {
+      this.duck.body.mass += 5
+    })
+
     this.score = this.add.text(this.world.width - 20, 0, '0', config.defaultTextStyle)
     this.score.fontSize = 100
     this.score.fill = '#ffff00'
@@ -82,7 +86,6 @@ export default class extends Phaser.State {
   resetDuck() {
     this.duck.body.x = 100
     this.duck.body.y = 100
-    this.duck.body.mass += 20
     this.duck.body.velocity.x = 100
     this.duck.body.velocity.y = 0
   }
