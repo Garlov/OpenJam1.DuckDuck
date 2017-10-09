@@ -55,7 +55,7 @@ export default class extends Phaser.State {
   endGame() {
     let highscore = parseInt(localStorage.getItem(config.localStorageName + 'highscore'))
 
-    if (highscore && highscore < this.ducksMoved) {
+    if (!highscore || highscore < this.ducksMoved) {
       localStorage.setItem(config.localStorageName + 'highscore', this.ducksMoved)
     }
 
