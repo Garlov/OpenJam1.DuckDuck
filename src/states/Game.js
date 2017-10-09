@@ -2,12 +2,16 @@ import Phaser from 'phaser'
 
 export default class extends Phaser.State {
   init() {
+    this.ducksMoved = 0
     this.stage.disableVisibilityChange = true
+    let rKey = this.game.input.keyboard.addKey(Phaser.Keyboard.R)
+    rKey.onDown.add(() => {
+      this.state.start('Game')
+    })
   }
   preload() {
     this.game.physics.startSystem(Phaser.Physics.P2JS)
     this.game.physics.p2.restitution = 0.4
-    // this.game.physics.p2.gravity.x = 100
     this.game.physics.p2.gravity.y = 250
 
     this.fluid = this.game.add.group()
@@ -21,7 +25,6 @@ export default class extends Phaser.State {
       this.addDrop(10)
     }, this)
 
-
     this.game.time.events.loop(18, () => {
       this.addDrop(-5)
     }, this)
@@ -30,14 +33,41 @@ export default class extends Phaser.State {
       this.addDrop(5)
     }, this)
 
-    this.addShaders()
+    this.addShadersToFluid()
+
+    this.duck = this.game.add.sprite(100, 100, 'duck')
+    this.game.physics.p2.enable(this.duck)
+    this.duck.body.collideWorldBounds = true
+
+    // This makes the collision body smaller so that the droplets can get
+    // really up close and goopy
+    this.duck.body.setCircle(this.duck.width * 0.5)
+    this.duck.body.mass = 200
+    this.duck.body.velocity.x = 100
+  }
+
+  checkDuckDistance() {
+    if (this.duck.position.x > this.game.width - 200) {
+      this.ducksMoved += 1
+      this.resetDuck()
+    }
+  }
+
+  resetDuck() {
+    this.duck.body.x = 100
+    this.duck.body.y = 100
+    this.duck.body.mass += 20
+    this.duck.body.velocity.x = 100
+    this.duck.body.velocity.y = 0
   }
 
   create() {}
 
   render() {}
 
-  update() {}
+  update() {
+    this.checkDuckDistance()
+  }
 
   addDrop(xDif) {
     let droplet = this.fluid.getFirstDead()
@@ -66,7 +96,7 @@ export default class extends Phaser.State {
     // droplet.body.velocity.x = this.game.rnd.between(-40, 40)
   }
 
-  addShaders() {
+  addShadersToFluid() {
     let blurX = this.game.add.filter('BlurX')
     let blurY = this.game.add.filter('BlurY')
     blurX.blur = 12
