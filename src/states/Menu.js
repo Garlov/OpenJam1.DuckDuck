@@ -32,6 +32,28 @@ export default class extends Phaser.State {
 
     this.playText = this.add.text(this.game.world.centerX, this.game.height * 0.7, 'Play', config.defaultTextStyle)
     this.playText.anchor.setTo(0.5)
+
+    let highscore = parseInt(localStorage.getItem(config.localStorageName + 'highscore'))
+    if (Number.isNaN(highscore)) {
+      highscore = 0
+    }
+    this.highscoreText = this.add.text(this.game.world.centerX, this.game.height * 0.85, `Highscore: ${highscore}`, config.defaultTextStyle)
+    this.highscoreText.fontSize = 40
+    this.highscoreText.fill = '#ffff00'
+    this.highscoreText.stroke = '#000000'
+    this.highscoreText.strokeThickness = 10
+    this.highscoreText.anchor.setTo(0.5)
+
+    let lastscore = parseInt(localStorage.getItem(config.localStorageName + 'last'))
+    if (Number.isNaN(lastscore)) {
+      lastscore = 0
+    }
+    this.lastscoreText = this.add.text(this.game.world.centerX, this.game.height * 0.92, `Last score: ${lastscore}`, config.defaultTextStyle)
+    this.lastscoreText.fontSize = 40
+    this.lastscoreText.fill = '#ffff00'
+    this.lastscoreText.stroke = '#000000'
+    this.lastscoreText.strokeThickness = 10
+    this.lastscoreText.anchor.setTo(0.5)
   }
 
   render() {}
