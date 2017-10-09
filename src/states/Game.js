@@ -39,8 +39,6 @@ export default class extends Phaser.State {
     this.game.physics.p2.enable(this.duck)
     this.duck.body.collideWorldBounds = true
 
-    // This makes the collision body smaller so that the droplets can get
-    // really up close and goopy
     this.duck.body.setCircle(this.duck.width * 0.5)
     this.duck.body.mass = 200
     this.duck.body.velocity.x = 100
