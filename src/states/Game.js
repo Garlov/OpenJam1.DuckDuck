@@ -4,9 +4,9 @@ export default class extends Phaser.State {
   init() {
     this.ducksMoved = 0
     this.stage.disableVisibilityChange = true
-    let rKey = this.game.input.keyboard.addKey(Phaser.Keyboard.R)
-    rKey.onDown.add(() => {
-      this.state.start('Game')
+    let escKey = this.game.input.keyboard.addKey(Phaser.Keyboard.ESC)
+    escKey.onDown.add(() => {
+      this.state.start('Menu')
     })
   }
   preload() {
