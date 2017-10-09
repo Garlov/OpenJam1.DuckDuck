@@ -15,6 +15,11 @@ export default class extends Phaser.State {
     this.game.physics.p2.restitution = 0.4
     this.game.physics.p2.gravity.y = 250
 
+    this.goalArea = this.game.add.graphics()
+    this.goalArea.beginFill(0xffffff, 0.5)
+    this.goalArea.drawRect(this.game.width - 200, 0, 200, this.game.height)
+    this.goalArea.endFill()
+
     this.fluid = this.game.add.group()
 
     this.game.time.events.loop(10, () => {
