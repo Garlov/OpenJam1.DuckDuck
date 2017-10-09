@@ -70,6 +70,9 @@ export default class extends Phaser.State {
       this.score.text = this.ducksMoved
       this.resetDuck()
     }
+    if (this.duck.position.y > this.game.height - 50) {
+      this.endGame()
+    }
   }
 
   resetDuck() {
