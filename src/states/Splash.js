@@ -15,8 +15,8 @@ export default class extends Phaser.State {
     //
     // load your assets
     //
-    this.load.script('BlurX', 'https://cdn.rawgit.com/photonstorm/phaser/master/v2/filters/BlurX.js')
-    this.load.script('BlurY', 'https://cdn.rawgit.com/photonstorm/phaser/master/v2/filters/BlurY.js')
+    this.load.script('BlurX', 'https://raw.githubusercontent.com/photonstorm/phaser-ce/master/filters/BlurX.js')
+    this.load.script('BlurY', 'https://raw.githubusercontent.com/photonstorm/phaser-ce/master/filters/BlurY.js')
     this.load.shader('threshold', './assets/shaders/threshold.frag')
     this.load.image('drop', './assets/images/drop.png')
     this.load.image('duck', './assets/images/duck_yellow.png')
